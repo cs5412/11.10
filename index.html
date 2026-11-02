@@ -11,7 +11,7 @@
 /* Layout: 平板優先的單頁導覽 — 上方固定分站列，內容依 hash 切換「行程／成果／第1–4站」，左右滑動換頁 */
 :root{
   --bg:#F3F6F3; --surface:#FFFFFF; --ink:#18282A; --muted:#5A6B6A; --line:#D7E0DC;
-  --accent:#0E6B5E; --accent-soft:#E0EFEA; --stop:#B4651B; --stop-soft:#F6EADC; --travel:#8A9A97;
+  --accent:#0E6B5E; --accent-soft:#E0EFEA; --stop:#B4651B; --stop-soft:#F6EADC; --travel:#8A9A97; --sky:#3D6B9C; --sky-soft:#E3ECF6;
   --track:#E7EDEA; --shade:rgba(10,24,22,.62); --on-photo:#FFFFFF; --glow:rgba(180,101,27,.55);
   --display:"Noto Serif TC","Songti TC","PMingLiU",serif;
   --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
@@ -19,11 +19,11 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#111A1A; --surface:#182424; --ink:#E6EEEB; --muted:#9BAEAA; --line:#2B3A39;
-  --accent:#5CC3AE; --accent-soft:#1C3532; --stop:#E9A35E; --stop-soft:#3A2A1B; --travel:#6E807C;
+  --accent:#5CC3AE; --accent-soft:#1C3532; --stop:#E9A35E; --stop-soft:#3A2A1B; --travel:#6E807C; --sky:#8FB7E3; --sky-soft:#1B2A3B;
   --track:#22302F; --shade:rgba(0,0,0,.6); --glow:rgba(233,163,94,.55); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#111A1A; --surface:#182424; --ink:#E6EEEB; --muted:#9BAEAA; --line:#2B3A39;
-  --accent:#5CC3AE; --accent-soft:#1C3532; --stop:#E9A35E; --stop-soft:#3A2A1B; --travel:#6E807C;
+  --accent:#5CC3AE; --accent-soft:#1C3532; --stop:#E9A35E; --stop-soft:#3A2A1B; --travel:#6E807C; --sky:#8FB7E3; --sky-soft:#1B2A3B;
   --track:#22302F; --shade:rgba(0,0,0,.6); --glow:rgba(233,163,94,.55); color-scheme:dark}
 
 *{box-sizing:border-box}
@@ -49,7 +49,7 @@ button{font:inherit;color:inherit}
 .progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .45s cubic-bezier(.2,.8,.2,1)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--stop);outline-offset:2px}
 
-main{padding-block:28px 72px}
+main{padding-block:28px 120px}
 section[data-view]{display:grid;gap:28px}
 .eyebrow{font-size:14px;letter-spacing:.12em;color:var(--accent);font-weight:700}
 .lead{color:var(--muted);max-width:44em}
@@ -167,7 +167,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:righ
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted);margin-top:10px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
-.c1{background:var(--accent)} .c2{background:var(--stop)} .c3{background:var(--travel)} .c4{background:var(--muted)}
+.c1{background:var(--accent)} .c2{background:var(--stop)} .c3{background:var(--travel)} .c4{background:var(--sky)}
 .chartbox{position:relative;width:100%;overflow-x:auto}
 .chartbox svg{display:block;width:100%;min-width:480px;height:auto}
 .chartbox svg text{fill:var(--muted);font-family:var(--mono);font-size:12px}
@@ -249,6 +249,85 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
 @keyframes inR{from{opacity:.0;transform:translateX(28px)}to{opacity:1;transform:none}}
 @keyframes inL{from{opacity:.0;transform:translateX(-28px)}to{opacity:1;transform:none}}
 
+
+/* stop 3 host + supplementary */
+.chip.s{background:var(--sky-soft);color:var(--sky)}
+.hostcard{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;background:var(--sky-soft);border-radius:16px;padding:22px}
+.hostcard h3{color:var(--sky);margin-bottom:6px}
+.hosticon{width:64px;height:64px;border-radius:50%;background:var(--surface);display:grid;place-items:center}
+.hosticon svg{width:38px;height:38px;fill:var(--sky)}
+section:not([hidden]) .hosticon svg{animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.supp{background:var(--surface);border:1px dashed var(--line);border-radius:16px}
+.supp>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center;padding:18px 22px;min-height:64px}
+.supp>summary::-webkit-details-marker{display:none}
+.supp-h{display:grid;gap:2px}
+.supp-h .tagline{font-size:13px;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.supp-h b{font-family:var(--display);font-size:20px}
+.supp-k{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;color:var(--muted)}
+.supp-k b{font-family:var(--mono);color:var(--accent);font-size:17px}
+.supp-t{grid-row:1;grid-column:2;display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--surface);border-radius:999px;padding:6px 16px;font-weight:700;font-size:15px}
+.supp-t::after{content:"▾";transition:transform .3s}
+.supp[open] .supp-t::after{transform:rotate(180deg)}
+.supp-body{display:grid;gap:18px;padding:0 22px 22px}
+.supp[open] .supp-body{animation:inUp .45s cubic-bezier(.2,.8,.2,1) both}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--line)}
+.tabs button{border:0;background:none;min-height:48px;padding:0 14px;cursor:pointer;font-size:16px;color:var(--muted);font-weight:500;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s}
+.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tabp{display:grid;gap:18px}
+.tabp:not([hidden]){animation:inUp .4s cubic-bezier(.2,.8,.2,1) both}
+
+/* calculator */
+.calc-g{display:grid;gap:10px}
+.calc-r{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--bg)}
+.calc-r small{display:block;color:var(--muted);font-size:13px}
+.step{display:inline-flex;align-items:center;gap:6px}
+.step button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:22px;cursor:pointer;line-height:1;transition:transform .12s,background .2s}
+.step button:active{transform:scale(.88)}
+.step button.plus{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.step output{min-width:30px;text-align:center;font-family:var(--mono);font-size:20px}
+.toggle{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);cursor:pointer}
+.toggle input{width:22px;height:22px;accent-color:var(--stop)}
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px;margin-top:14px}
+.calc-out div{border-radius:12px;padding:12px 14px;background:var(--accent-soft)}
+.calc-out div:nth-child(2){background:var(--stop-soft)}
+.calc-out div:nth-child(3){background:var(--sky-soft)}
+.calc-out b{display:block;font-family:var(--display);font-weight:800;font-size:30px;line-height:1.2;color:var(--accent)}
+.calc-out div:nth-child(2) b{color:var(--stop)}
+.calc-out div:nth-child(3) b{color:var(--sky)}
+.calc-out span{font-size:14px;color:var(--muted)}
+.bump{animation:bump .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes bump{40%{transform:scale(1.18)}}
+
+/* stamp card */
+.stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:16px;border-radius:14px;background:var(--sky-soft);margin-block:12px}
+.stamps button{aspect-ratio:1;max-width:100%;border-radius:50%;border:2px dashed var(--sky);background:var(--surface);font-family:var(--mono);color:var(--muted);font-size:15px;cursor:pointer;display:grid;place-items:center;padding:0}
+.stamps button.on{border:3px solid var(--stop);background:var(--stop-soft);color:var(--stop);font-family:var(--display);font-weight:800;font-size:22px;animation:stamp .45s cubic-bezier(.2,.8,.2,1);transform:rotate(-12deg)}
+@keyframes stamp{0%{transform:scale(1.8) rotate(-30deg);opacity:0}60%{transform:scale(.9) rotate(-8deg);opacity:1}100%{transform:scale(1) rotate(-12deg)}}
+.stamp-act{display:flex;flex-wrap:wrap;gap:10px}
+.stamp-msg{margin-top:10px;font-weight:700;min-height:1.7em}
+.stamp-msg.full{color:var(--stop);animation:bump .5s}
+
+/* font size + top */
+.fz{position:fixed;z-index:20;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;box-shadow:0 8px 24px -10px var(--shade)}
+.fz button{width:48px;height:48px;border-radius:50%;border:0;background:transparent;font-family:var(--display);font-weight:800;font-size:20px;cursor:pointer;color:var(--ink);transition:background .2s,transform .12s}
+.fz button:active{transform:scale(.9)}
+.fz button:hover{background:var(--accent-soft)}
+.fz button small{font-size:13px}
+.fz #fzv{min-width:52px;text-align:center;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.fz #totop{background:var(--accent);color:var(--surface);font-family:var(--body);font-size:20px;margin-left:4px}
+.fz #totop[hidden]{display:none}
+
+/* reveal & misc motion */
+.pre{opacity:0;transform:translateY(28px);animation:none!important}
+.rise{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes inUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+section.anim .tl li{animation:inUp .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*45ms)}
+section.anim .cover .in{animation:inUp .7s .15s cubic-bezier(.2,.8,.2,1) both}
+.stat{transition:transform .2s,box-shadow .2s}
+.stat:active{transform:scale(.97)}
+.stat:hover{box-shadow:0 8px 22px -14px var(--shade)}
+
 @media (max-height:640px){.cover{min-height:210px}}
 @media (max-width:620px){
   .card{padding:16px}
@@ -302,7 +381,7 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
   <div class="mosaic">
     <a href="#stop-1"><img data-img="A20" alt="柯氏簡餐記者會"><span><b>1</b>柯氏簡餐</span></a>
     <a href="#stop-2"><img data-img="B13" alt="城隍廟淨杯記者會"><span><b>2</b>城隍廟</span></a>
-    <a href="#stop-3"><img data-img="C14" alt="破袋稽查"><span><b>3</b>資源回收貯物場</span></a>
+    <a href="#stop-3"><img data-img="C22" alt="資源回收"><span><b>3</b>資源回收貯物場</span></a>
     <a href="#stop-4"><img data-img="D61" alt="木家具維修"><span><b>4</b>興仁社區</span></a>
   </div>
 
@@ -323,7 +402,7 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
       <li class="meal" data-s="11:50" data-e="13:00" data-l="午餐・弄來小餐桌"><span class="t">11:50–13:00</span><span class="rail"></span><div class="body"><div class="place">午餐・弄來小餐桌</div><div class="sub">東區民族里吳鳳北路 53 號</div></div></li>
       <li class="travel" data-s="13:00" data-e="13:10" data-l="前往第 3 站"><span class="t">13:00–13:10</span><span class="rail"></span><div class="body">車程 10 分</div></li>
       <li class="stopli" data-s="13:10" data-e="13:40" data-l="第 3 站 資源回收貯物場" data-v="stop-3"><span class="t">13:10–13:40</span><span class="rail"></span><div class="body">
-        <a class="stopcard" href="#stop-3"><span class="num">3</span><span><span class="tag">垃圾強制分類・資收物流向</span><br><b>嘉義市政府資源回收貯物場</b><span class="min">30 分</span><br><span class="sub">彌陀路 55 號</span></span><span class="go">查看說明 →</span></a>
+        <a class="stopcard" href="#stop-3"><span class="num">3</span><span><span class="tag">清潔隊資源回收作業</span><br><b>嘉義市政府資源回收貯物場</b><span class="min">30 分</span><br><span class="sub">彌陀路 55 號</span></span><span class="go">查看說明 →</span></a>
       </div></li>
       <li class="travel" data-s="13:40" data-e="13:50" data-l="前往第 4 站"><span class="t">13:40–13:50</span><span class="rail"></span><div class="body">車程 10 分</div></li>
       <li class="stopli" data-s="13:50" data-e="14:20" data-l="第 4 站 興仁社區" data-v="stop-4"><span class="t">13:50–14:20</span><span class="rail"></span><div class="body">
@@ -389,6 +468,23 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
         </table>
       </div>
     </div>
+  </div>
+
+  <div class="card">
+    <h3>折扣試算</h3>
+    <p class="note" style="margin-bottom:12px">點 ＋／− 模擬一次自備容器外帶消費，看民眾省多少、店家拿多少。</p>
+    <div class="calc-g">
+      <div class="calc-r"><span>飲品<small>單品滿 40 元</small></span><span class="step"><button type="button" data-c="d" data-s="-1" aria-label="減少">−</button><output id="qd">0</output><button type="button" class="plus" data-c="d" data-s="1" aria-label="增加">＋</button></span></div>
+      <div class="calc-r"><span>餐點<small>單品滿 40 元</small></span><span class="step"><button type="button" data-c="m" data-s="-1" aria-label="減少">−</button><output id="qm">0</output><button type="button" class="plus" data-c="m" data-s="1" aria-label="增加">＋</button></span></div>
+      <div class="calc-r"><span>餐點<small>單品滿 80 元</small></span><span class="step"><button type="button" data-c="b" data-s="-1" aria-label="減少">−</button><output id="qb">1</output><button type="button" class="plus" data-c="b" data-s="1" aria-label="增加">＋</button></span></div>
+      <label class="toggle" for="kos"><input type="checkbox" id="kos" checked><span>在柯氏簡餐消費：自備餐盒另送小菜（價值 10 元）</span></label>
+    </div>
+    <div class="calc-out">
+      <div><b id="cSave">30</b><span>民眾省下（元）</span></div>
+      <div><b id="cRew">10</b><span>店家推廣獎勵金（元）</span></div>
+      <div><b id="cCup">1</b><span>少用一次性容器（個）</span></div>
+    </div>
+    <p class="src">連鎖飲料店另有自備杯 5 元價差，未計入。</p>
   </div>
 
   <div class="grid2">
@@ -503,74 +599,92 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
 
 <!-- ===== 第3站 ===== -->
 <section data-view="stop-3" hidden>
-  <div class="cover"><img data-img="C14" alt=""><div class="in"><div class="bignum">3</div><div class="eyebrow">第 3 處訪查點・13:10–13:40</div><h2>嘉義市政府資源回收貯物場</h2></div></div>
-  <div class="facts"><span class="chip">嘉義市彌陀路 55 號</span><span class="chip w">3.9.1 垃圾強制分類破袋稽查</span><span class="chip w">3.9.2 社區及公寓大廈資收物流向</span></div>
+  <div class="cover"><img data-img="C22" alt=""><div class="in"><div class="bignum">3</div><div class="eyebrow">第 3 處訪查點・13:10–13:40</div><h2>嘉義市政府資源回收貯物場</h2></div></div>
+  <div class="facts"><span class="chip">嘉義市彌陀路 55 號</span><span class="chip s">本站由清潔隊說明</span></div>
 
-  <p class="why">回收端的成效，取決於前端有沒有分對。本站說明計畫在分類端的兩項工作：到垃圾車點、沿線、機關、學校與公園實地破袋稽查，以及逐一追蹤社區、公寓大廈的資收物去化管道。</p>
-
-  <div class="grid3">
-    <div class="stat"><div class="v" data-n="5689">5,689<small>包</small></div><div class="k">破袋稽查</div><div class="d">229 趟次（2 月至 9 月底）</div></div>
-    <div class="stat"><div class="v" data-n="98.8" data-d="1">98.8<small>%</small></div><div class="k">合格率</div><div class="d">115 年加嚴：2 件以上資收物即不合格</div></div>
-    <div class="stat warm"><div class="v" data-n="21">21<small>處</small></div><div class="k">重點路線全數改善</div><div class="d">無含資收物比率提升 2.8～55 個百分點</div></div>
-    <div class="stat"><div class="v" data-n="546">546<small>處</small></div><div class="k">社區流向調查</div><div class="d">全市 654 處社區及公寓大廈</div></div>
+  <div class="hostcard">
+    <div class="hosticon" aria-hidden="true"><svg viewBox="0 0 48 48"><g><path d="M16 8h11V4l9 7.5-9 7.5v-4H16z"/></g><g transform="rotate(120 24 24)"><path d="M16 8h11V4l9 7.5-9 7.5v-4H16z"/></g><g transform="rotate(240 24 24)"><path d="M16 8h11V4l9 7.5-9 7.5v-4H16z"/></g></svg></div>
+    <div>
+      <h3>清潔隊資源回收作業</h3>
+      <p>本站請委員聽取清潔隊說明貯物場運作及資源回收相關資料。本計畫在分類前端執行的破袋稽查與社區流向調查，整理於下方，作為補充參考。</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>每 100 包垃圾裡</h3>
-    <div class="stack" id="stack"><i class="c1" data-w="92.4">92.4% 完全無資收物</i><i class="c3" data-w="6.4">6.4%</i><i class="c2" data-w="1.2"></i></div>
-    <div class="legend"><span><i class="c1"></i>完全無資收物 92.4%</span><span><i class="c3"></i>零星 1 件 6.4%（合格）</span><span><i class="c2"></i>2 件以上 1.2%（不合格）</span></div>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <h3>各稽查場域合格率</h3>
-      <div class="seg" role="group" aria-label="判定標準">
-        <button type="button" aria-pressed="true" data-std="a">現行標準</button>
-        <button type="button" aria-pressed="false" data-std="b">完全無資收物</button>
+  <details class="supp" id="supp">
+    <summary>
+      <span class="supp-h"><span class="tagline">補充資料・本計畫配合辦理</span><b>前端分類稽查成果</b></span>
+      <span class="supp-k"><span><b>5,689</b> 包破袋稽查</span><span><b>98.8%</b> 合格</span><span><b>546</b> 處社區調查</span></span>
+      <span class="supp-t" aria-hidden="true">展開</span>
+    </summary>
+    <div class="supp-body">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-tab="t-bag">垃圾強制分類破袋稽查</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="t-flow">社區及公寓大廈流向調查</button>
       </div>
-      <div class="bars" id="typeBars"></div>
-      <p class="src" id="typeNote">現行標準：夾雜 1 件以下資收物仍判合格。</p>
-    </div>
-    <div class="card">
-      <h3>最常被丟錯的資收物</h3>
-      <div class="bars" id="kindBars"></div>
-      <p class="src">常見原因：紙容器沾油污被當垃圾；回收業者不收特定塑膠容器，民眾誤以為不能回收。</p>
-    </div>
-  </div>
 
-  <div class="card">
-    <h3>21 處重點路線：114 年 → 115 年</h3>
-    <p class="note" style="margin-bottom:12px">指標為垃圾包「完全無資收物」比率。點類型篩選。</p>
-    <div class="chips" id="dbChips"></div>
-    <div class="axis"><span></span><div><span>40%</span><span>60%</span><span>80%</span><span>100%</span></div><span></span></div>
-    <div class="db" id="db"></div>
-    <div class="legend"><span><i style="background:var(--surface);border:2px solid var(--travel);border-radius:50%"></i>114 年</span><span><i class="c1" style="border-radius:50%"></i>115 年</span></div>
-  </div>
+      <div class="tabp" id="t-bag">
+        <div class="grid3">
+          <div class="stat"><div class="v" data-n="5689">5,689<small>包</small></div><div class="k">破袋稽查</div><div class="d">229 趟次（2 月至 9 月底）</div></div>
+          <div class="stat"><div class="v" data-n="98.8" data-d="1">98.8<small>%</small></div><div class="k">合格率</div><div class="d">115 年加嚴：2 件以上資收物即不合格</div></div>
+          <div class="stat warm"><div class="v" data-n="21">21<small>處</small></div><div class="k">重點路線全數改善</div><div class="d">提升 2.8～55 個百分點</div></div>
+        </div>
+        <div class="card">
+          <h3>每 100 包垃圾裡</h3>
+          <div class="stack" id="stack"><i class="c1" data-w="92.4">92.4% 完全無資收物</i><i class="c4" data-w="6.4">6.4%</i><i class="c2" data-w="1.2"></i></div>
+          <div class="legend"><span><i class="c1"></i>完全無資收物 92.4%</span><span><i class="c4"></i>零星 1 件 6.4%（合格）</span><span><i class="c2"></i>2 件以上 1.2%（不合格）</span></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>各稽查場域合格率</h3>
+            <div class="seg" role="group" aria-label="判定標準">
+              <button type="button" aria-pressed="true" data-std="a">現行標準</button>
+              <button type="button" aria-pressed="false" data-std="b">完全無資收物</button>
+            </div>
+            <div class="bars" id="typeBars"></div>
+            <p class="src" id="typeNote"></p>
+          </div>
+          <div class="card">
+            <h3>最常被丟錯的資收物</h3>
+            <div class="bars" id="kindBars"></div>
+            <p class="src">紙容器沾油污被當垃圾；回收業者不收特定塑膠容器，民眾誤以為不能回收。</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>21 處重點路線：114 年 → 115 年</h3>
+          <p class="note" style="margin-bottom:12px">垃圾包「完全無資收物」比率。點類型篩選。</p>
+          <div class="chips" id="dbChips"></div>
+          <div class="axis"><span></span><div><span>40%</span><span>60%</span><span>80%</span><span>100%</span></div><span></span></div>
+          <div class="db" id="db"></div>
+          <div class="legend"><span><i style="background:var(--surface);border:2px solid var(--travel);border-radius:50%"></i>114 年</span><span><i class="c1" style="border-radius:50%"></i>115 年</span></div>
+        </div>
+        <div class="gal card"><div class="galhead"><h3>稽查照片</h3><span class="note">點照片可放大</span></div><div class="strip" data-g="s3a"></div></div>
+      </div>
 
-  <div class="grid2">
-    <div class="card">
-      <h3>社區及公寓大廈流向調查</h3>
-      <ul class="dots">
-        <li>多數由住戶或管委會集中後交清潔隊；部分另委託個體回收業者或慈濟等機構</li>
-        <li>設有垃圾分類及資源回收設施：<b>95 處</b>（17%）</li>
-        <li>設有特定回收物獨立分類機制：<b>48 處</b>（9%）</li>
-      </ul>
-      <div class="bars" id="flowBars" style="margin-top:14px"></div>
-      <p class="src">特定回收物獨立回收處次（至 9 月底）。</p>
+      <div class="tabp" id="t-flow" hidden>
+        <div class="grid3">
+          <div class="stat"><div class="v" data-n="546">546<small>處</small></div><div class="k">完成調查</div><div class="d">全市 654 處社區及公寓大廈（至 9 月底）</div></div>
+          <div class="stat"><div class="v" data-n="95">95<small>處</small></div><div class="k">設有分類回收設施</div><div class="d">占已調查 17%</div></div>
+          <div class="stat warm"><div class="v" data-n="48">48<small>處</small></div><div class="k">特定回收物獨立分類</div><div class="d">占已調查 9%</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>獨立回收哪些東西</h3>
+            <div class="bars" id="flowBars"></div>
+            <p class="src">處次，至 9 月底。</p>
+          </div>
+          <div class="card">
+            <h3>資收物去化管道</h3>
+            <ul class="dots">
+              <li>多數由住戶或管委會集中後交清潔隊垃圾車清運</li>
+              <li>部分另委託個體回收業者，少數交慈濟等回收機構</li>
+              <li>調查時同步輔導玻璃瓶、高壓容器、電池單獨交付回收</li>
+            </ul>
+          </div>
+        </div>
+        <div class="gal card"><div class="galhead"><h3>調查照片</h3><span class="note">點照片可放大</span></div><div class="strip" data-g="s3b"></div></div>
+      </div>
     </div>
-    <div class="card">
-      <h3>稽查怎麼做</h3>
-      <ol class="steps">
-        <li><span>出示證件、說明來意，全程錄影</span></li>
-        <li><span>先目視，疑似不合格才破袋，用夾子翻檢並記錄</span></li>
-        <li><span>完全分類正確者，發環保標章透明垃圾袋鼓勵</span></li>
-        <li><span>不合格開立勸導單，請民眾現場分類或攜回重分</span></li>
-        <li><span>單包 5 件以上且路線累計 10 件以上，次月再查</span></li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="gal card"><div class="galhead"><h3>現場照片</h3><span class="note">點照片可放大・左右滑動</span></div><div class="strip" data-g="s3"></div></div>
+  </details>
 
   <div class="pager"><a class="btn" href="#stop-2">← 第 2 站</a><a class="btn primary" href="#stop-4">第 4 站 興仁社區 →</a></div>
 </section>
@@ -601,13 +715,11 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
     </div>
     <div class="card">
       <h3>惜物學習卡集點</h3>
-      <ol class="steps">
-        <li><span>領卡並簽署綠色承諾</span></li>
-        <li><span>捐出符合品項的不用品，1 次蓋 1 點</span></li>
-        <li><span>現場有需要的物品可自由帶走，不扣點</span></li>
-        <li><span>社區組集滿 10 點換環保衛生紙一串；校園組 5 點換 50 元禮券</span></li>
-      </ol>
-      <p class="note" style="margin-top:12px">無人索取的物資每月巡迴清運，二手袋轉入二手袋循環站，舊衣交民間回收，其餘轉贈公益團體。</p>
+      <p class="note">領卡簽署綠色承諾後，每捐一次蓋 1 點；有需要的物品可自由帶走，不扣點。試著蓋蓋看：</p>
+      <div class="stamps" id="stamps"></div>
+      <div class="stamp-act"><button type="button" class="btn primary" id="stampBtn">捐出一件・蓋章</button><button type="button" class="btn" id="stampReset">重來</button></div>
+      <p class="stamp-msg" id="stampMsg">已集 0 / 10 點</p>
+      <p class="note" style="margin-top:8px">社區組集滿 10 點換環保抽取衛生紙一串；校園組 5 點換 50 元禮券。無人索取的物資每月巡迴清運，二手袋轉入二手袋循環站，舊衣交民間回收，其餘轉贈公益團體。</p>
     </div>
   </div>
 
@@ -645,6 +757,8 @@ section.enter-r>*:nth-child(n+5),section.enter-l>*:nth-child(n+5){animation-dela
 
 </main>
 
+<div class="fz" role="group" aria-label="字級調整"><button type="button" data-fz="-1" aria-label="字縮小">A<small>−</small></button><span id="fzv">100%</span><button type="button" data-fz="1" aria-label="字放大">A<small>＋</small></button><button type="button" id="totop" aria-label="回到頂端" hidden>↑</button></div>
+
 <div class="lbx" id="lb" hidden role="dialog" aria-modal="true" aria-label="照片檢視">
   <div class="top"><span id="lbCount"></span><button type="button" class="x" id="lbX" aria-label="關閉">✕</button></div>
   <div class="stage" id="lbStage">
@@ -670,7 +784,8 @@ $$("img[data-img]").forEach(function(im){var k=im.getAttribute("data-img");if(IM
 var G={
  s1:[["A20","6/1 記者會：長官與店家於柯氏簡餐合影"],["A19","記者會現場採訪"],["A21","長官示範掃碼填單"],["A22","示範自備餐盒點餐、領取折扣"],["A74","民眾響應自備飲料杯"],["A75","民眾自備容器購買便當"],["A76","結合時事與店家共同行銷"],["A77","業者積極推廣活動"],["A60","淨零作為：不免費提供吸管與購物袋"],["A63","淨零作為：不免費提供購物用塑膠袋"],["A65","鼓勵自備杯並提供加量優惠"],["A70","設置公共餐具清洗區"],["A78","逐店核發獎勵金"],["A79","逐店核對份數"],["A5","自備食器 easy購活動海報"],["A6","LINE 官方帳號圖文選單"],["A7","合作店家線上美食地圖"]],
  s2:[["B1","廟方主持夯枷遶境"],["B2","遶境隊伍身披夯枷"],["B6","城隍廟廟埕奉茶站"],["B7","嘉義市政府前廣場奉茶站"],["B8","信眾使用平安杯飲水"],["B9","信眾使用平安杯飲水"],["B10","信眾自備杯承裝飲用水"],["B11","民眾熱情響應"],["B12","9/4 淨杯儀式合照"],["B13","記者會大合照"],["B14","宣導攤位展示"],["B15","向長官與貴賓說明活動宗旨"],["B3","諸羅城隍・平安解厄杯"]],
- s3:[["C14","破袋檢查垃圾包內容物"],["C12","夾雜 2 項以上資收物屬違規"],["C13","常見紙類容器未正確分類"],["C11","向民眾進行資收物分類宣導"],["C15","公家機關稽查及宣導"],["C16","配合破袋給予民眾宣導品"],["C19","管理員填寫流向調查紀錄單"],["C20","管理員確認紀錄單內容"],["C21","社區回收站點擺放整齊"],["C22","回收箱清楚標示種類"],["C23","特定物品獨立分類回收"],["C24","廢電池獨立分類回收"]],
+ s3a:[["C14","破袋檢查垃圾包內容物"],["C12","夾雜 2 項以上資收物屬違規"],["C13","常見紙類容器未正確分類"],["C11","向民眾進行資收物分類宣導"],["C15","公家機關稽查及宣導"],["C16","配合破袋給予民眾宣導品"]],
+ s3b:[["C19","管理員填寫流向調查紀錄單"],["C20","管理員確認紀錄單內容"],["C21","社區回收站點擺放整齊"],["C22","回收箱清楚標示種類"],["C23","特定物品獨立分類回收"],["C24","廢電池獨立分類回收"]],
  s4:[["D30","興仁社區發展協會外觀"],["D31","協會內部空間"],["D8","興仁據點兌換情形"],["D9","興仁據點兌換情形"],["D61","木椅維修"],["D62","木椅維修"],["D59","電鍋維修"],["D60","電風扇維修"],["D2","社區版惜物學習卡"],["D4","不用品常態據點海報"],["D35","維修站場次總覽海報"],["D37","小型木家具維修站海報"],["D36","小家電維修站海報"],["D38","電池玩具維修站海報"]]
 };
 $$("[data-g]").forEach(function(st){
@@ -704,12 +819,13 @@ function fmt(n,d){return Number(n).toLocaleString("zh-TW",{minimumFractionDigits
 function countUp(el){
   var t=parseFloat(el.getAttribute("data-n")),d=parseInt(el.getAttribute("data-d")||"0",10);
   var small=el.querySelector("small");var sm=small?small.outerHTML:"";
-  if(RM||t===0){return}
+  if(RM||t===0||el.closest("details:not([open])")||el.closest(".tabp[hidden]")){return}
   var st=null,dur=1100;
   function f(ts){if(!st)st=ts;var p=Math.min(1,(ts-st)/dur);var e=1-Math.pow(1-p,3);el.innerHTML=fmt(t*e,d)+sm;if(p<1)requestAnimationFrame(f);}
   requestAnimationFrame(f);
 }
 
+function onVis(el,fn){if(RM||!("IntersectionObserver" in window)){fn();return}var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++){if(es[i].isIntersecting){io.disconnect();fn();break}}},{threshold:.1});io.observe(el)}
 /* generic bars */
 function bars(el,rows,max,unit,dec){
   el.innerHTML="";
@@ -720,9 +836,9 @@ function bars(el,rows,max,unit,dec){
     d.querySelector(".vl").textContent=(r.t!==undefined?r.t:fmt(r.v,dec||0)+(unit||""));
     if(r.c)d.querySelector(".fl").style.background=r.c;
     el.appendChild(d);
-    var fl=d.querySelector(".fl"),w=Math.max(1.5,r.v/max*100)+"%";
-    if(RM){fl.style.width=w}else{requestAnimationFrame(function(){requestAnimationFrame(function(){fl.style.width=w})})}
+    d.querySelector(".fl").setAttribute("data-w",Math.max(1.5,r.v/max*100)+"%");
   });
+  onVis(el,function(){$$(".fl",el).forEach(function(f,i){setTimeout(function(){f.style.width=f.getAttribute("data-w")},RM?0:i*70)})});
 }
 
 /* ---------- Stop 1 ---------- */
@@ -808,27 +924,90 @@ function runCharts(v){
     bars($("#retBars"),[{l:"4 月 → 5 月",v:34.6,t:"34.6%"},{l:"5 月 → 6 月",v:36.8,t:"36.8%"},{l:"6 月 → 7 月",v:41.7,t:"41.7%"},{l:"7 月 → 8 月",v:43.0,t:"43.0%",hi:1}],50);
     done.s1=1;}
   if(v==="stop-2"){donut();bars($("#waterBars"),[{l:"桶裝水＋平安杯（實際）",v:120,t:"120 L"},{l:"瓶裝水（推估）",v:305.4,t:"305 L",c:"var(--travel)"}],305.4);}
-  if(v==="stop-3"){var st=$$("#stack i");st.forEach(function(i){i.style.width="0"});requestAnimationFrame(function(){requestAnimationFrame(function(){st.forEach(function(i){i.style.width=i.getAttribute("data-w")+"%"})})});
+  if(v==="stop-3"){var st=$$("#stack i");st.forEach(function(i){i.style.width="0"});onVis($("#stack"),function(){setTimeout(function(){st.forEach(function(i){i.style.width=i.getAttribute("data-w")+"%"})},60)});
     var cur=$("[data-std][aria-pressed=true]");typeBars(cur?cur.getAttribute("data-std"):"a");
     bars($("#kindBars"),[{l:"紙容器（便當盒、紙杯、紙盒）",v:56,t:"56%"},{l:"塑膠容器（寶特瓶、杯蓋、內襯）",v:29,t:"29%"},{l:"鋁箔包、利樂包",v:10,t:"10%"},{l:"其他",v:5,t:"5%",c:"var(--travel)"}],60);
     var f=$("#dbChips [aria-pressed=true]");db(f?f.textContent:"全部");
     bars($("#flowBars"),[{l:"玻璃",v:46,t:"46 處"},{l:"廢電池",v:36,t:"36 處"},{l:"高壓容器",v:1,t:"1 處"}],46);}
   if(v==="stop-4"){var a=$("[data-site][aria-pressed=true]");siteBars(a?a.getAttribute("data-site"):"give");var r=$("[data-rep][aria-pressed=true]");repBars(r?r.getAttribute("data-rep"):"rate");
     bars($("#surBars"),[{l:"整體服務非常滿意",v:84.5,t:"84.5%"},{l:"透過環保局臉書得知",v:80,t:"約 8 成"},{l:"可接受未來酌收維修費",v:70,t:"約 70%"},{l:"想上小家電簡易維修課",v:90,t:"約 9 成"}],100);}
-  if(v!=="home"){$$('section[data-view="'+v+'"] .stat .v[data-n]').forEach(countUp);}
+
 }
+
+/* stop 3: supplementary details + tabs */
+(function(){
+  var d=$("#supp");
+  function fillActive(){var p=$(".tabp:not([hidden])",d);if(!p)return;$$(".v[data-n]",p).forEach(countUp);}
+  d.addEventListener("toggle",function(){var t=$(".supp-t",d);t.firstChild?t.firstChild.nodeValue=(d.open?"收合":"展開"):0;if(d.open){runCharts("stop-3");fillActive();}});
+  $$(".tabs button",d).forEach(function(b){b.addEventListener("click",function(){
+    $$(".tabs button",d).forEach(function(x){x.setAttribute("aria-selected",x===b?"true":"false")});
+    $$(".tabp",d).forEach(function(p){p.hidden=p.id!==b.getAttribute("data-tab")});
+    runCharts("stop-3");fillActive();
+  })});
+})();
+
+/* stop 1: calculator */
+(function(){
+  var q={d:0,m:0,b:1};
+  function bump(el){el.classList.remove("bump");void el.offsetWidth;el.classList.add("bump")}
+  function calc(){
+    var kos=$("#kos").checked;
+    var save=q.d*10+q.m*10+q.b*20+(kos?q.b*10:0),rew=q.d*5+q.m*5+q.b*10,cup=q.d+q.m+q.b;
+    [["#cSave",save],["#cRew",rew],["#cCup",cup]].forEach(function(p){var e=$(p[0]);if(e.textContent!==String(p[1])){e.textContent=p[1];bump(e)}});
+    $("#qd").textContent=q.d;$("#qm").textContent=q.m;$("#qb").textContent=q.b;
+  }
+  $$("[data-c]").forEach(function(b){b.addEventListener("click",function(){var k=b.getAttribute("data-c");q[k]=Math.max(0,Math.min(20,q[k]+ +b.getAttribute("data-s")));calc()})});
+  $("#kos").addEventListener("change",calc);calc();
+})();
+
+/* stop 4: stamp card */
+(function(){
+  var box=$("#stamps"),n=0;
+  for(var i=0;i<10;i++){var b=document.createElement("button");b.type="button";b.textContent=i+1;b.setAttribute("aria-label","第 "+(i+1)+" 點");b.addEventListener("click",function(){stamp()});box.appendChild(b)}
+  function msg(){var m=$("#stampMsg");m.classList.toggle("full",n>=10);m.textContent=n>=10?"集滿 10 點！可兌換環保抽取衛生紙一串":"已集 "+n+" / 10 點";}
+  function stamp(){if(n>=10)return;var c=box.children[n];c.classList.add("on");c.textContent="惜";n++;msg();}
+  $("#stampBtn").addEventListener("click",stamp);
+  $("#stampReset").addEventListener("click",function(){n=0;Array.prototype.forEach.call(box.children,function(c,i){c.classList.remove("on");c.textContent=i+1});msg();});
+})();
+
+/* font size */
+(function(){
+  var L=[0.9,1,1.12,1.25,1.4,1.55],i=2;
+  try{var s=localStorage.getItem("fz");if(s!==null&&L[+s])i=+s}catch(e){}
+  function apply(){$("#main").style.zoom=L[i];$("#fzv").textContent=Math.round(L[i]*100)+"%";try{localStorage.setItem("fz",i)}catch(e){}}
+  $$("[data-fz]").forEach(function(b){b.addEventListener("click",function(){i=Math.max(0,Math.min(L.length-1,i+ +b.getAttribute("data-fz")));apply();var v=$("#fzv");v.classList.remove("bump");void v.offsetWidth;v.classList.add("bump")})});
+  apply();
+  var tt=$("#totop");window.addEventListener("scroll",function(){tt.hidden=window.pageYOffset<600},{passive:true});
+  tt.addEventListener("click",function(){window.scrollTo(0,0)});
+})();
 
 /* routing */
 var VIEWS=["home","stop-1","stop-2","stop-3","stop-4"],cur=null;
 function show(){
   var id=(location.hash||"").replace("#","");if(VIEWS.indexOf(id)<0)id="home";
   var prev=cur;cur=id;
-  var dir=prev===null?"":(VIEWS.indexOf(id)>=VIEWS.indexOf(prev)?"enter-r":"enter-l");
+  var dir=prev===null?"enter-r":(VIEWS.indexOf(id)>=VIEWS.indexOf(prev)?"enter-r":"enter-l");
   $$("section[data-view]").forEach(function(s){var on=s.getAttribute("data-view")===id;s.hidden=!on;s.classList.remove("enter-r","enter-l");if(on&&dir&&!RM){void s.offsetWidth;s.classList.add(dir)}});
   $$(".nav a").forEach(function(a){if(a.getAttribute("data-link")===id){a.setAttribute("aria-current","page");try{a.scrollIntoView({block:"nearest",inline:"center",behavior:RM?"auto":"smooth"})}catch(e){}}else a.removeAttribute("aria-current")});
   $("#prog").style.width=((VIEWS.indexOf(id)+1)/VIEWS.length*100)+"%";
   window.scrollTo(0,0);
+  var sec=$('section[data-view="'+id+'"]');
+  sec.classList.remove("anim");void sec.offsetWidth;if(!RM)sec.classList.add("anim");
+  $$("#tl li").forEach(function(li,i){li.style.setProperty("--i",i)});
+  reveal(sec);
   runCharts(id);
+}
+function reveal(sec){
+  var vh=window.innerHeight||800,io=null;
+  var useIO=!RM&&("IntersectionObserver" in window);
+  if(useIO)io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=e.target;io.unobserve(t);t.classList.add("rise");requestAnimationFrame(function(){t.classList.remove("pre")});setTimeout(function(){$$(".stat .v[data-n]",t).concat(t.matches(".stat")?$$(".v[data-n]",t):[]).forEach(countUp)},120)}})},{threshold:.08});
+  Array.prototype.forEach.call(sec.children,function(ch){
+    ch.classList.remove("pre","rise");
+    if(ch.matches(".cover"))return;
+    var top=ch.getBoundingClientRect().top;
+    if(useIO&&top>vh*0.92){ch.classList.add("pre");io.observe(ch)}
+    else{$$(".v[data-n]",ch).forEach(function(v){if(!v.closest("details:not([open])")&&!v.closest("[hidden]"))countUp(v)})}
+  });
 }
 window.addEventListener("hashchange",show);
 
